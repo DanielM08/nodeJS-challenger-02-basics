@@ -1,6 +1,17 @@
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import Transaction from '../models/Transaction';
 
+interface Balance {
+  income: number;
+  outcome: number;
+  total: number;
+}
+
+interface Request{
+  transactions: Transaction[];
+  balance: Balance;
+}
+
 class CreateTransactionService {
   private transactionsRepository: TransactionsRepository;
 
@@ -8,8 +19,11 @@ class CreateTransactionService {
     this.transactionsRepository = transactionsRepository;
   }
 
-  public execute(): Transaction {
-    // TODO
+  public execute(): Request {
+    return {
+      "transactions" : this.transactionsRepository.all(),
+      "balance" : this.transactionsRepository.getBalance()
+    }
   }
 }
 
